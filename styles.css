@@ -300,3 +300,13 @@ button[type=submit]:hover, .btn-submit:hover { transform: translateY(-2px); box-
   .hero h1, .hero > p, .hero .cta-row, .hero .fine, .hero .panel { opacity: 1; animation: none; }
   .btn, .btn-ghost, .card, .dx-opt { transition: none; }
 }
+
+/* Agent-first homepage additions (2026-11-24) */
+.sliders { display: flex; flex-direction: column; gap: 18px; }
+.slider-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 16px; font-size: 14px; color: var(--text-secondary); }
+.slider-row .track { position: relative; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14); }
+.slider-row .knob { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); transform: translate(-50%, -50%); box-shadow: 0 0 12px rgba(198,241,53,0.55); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.chip { padding: 9px 16px; border: 1px solid var(--border, rgba(255,255,255,0.14)); border-radius: 999px; font-size: 14px; color: var(--text-secondary); text-decoration: none; background: rgba(11,18,32,0.55); transition: border-color .2s, color .2s; }
+.chip:hover { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 800px) { .slider-row { grid-template-columns: 104px 1fr; } }
