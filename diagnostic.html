@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRSNABLE | The diagnostic</title>
+<meta name="description" content="12 questions. About three minutes. Then PRSNABLE shows you what you are already carrying.">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;510;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <div class="logo"><a href="index.html">PRSNABLE</a></div>
+  <div class="nav-links">
+    <a href="index.html#rooms">Rooms</a>
+    <a href="agent.html">Your agent</a>
+    <a href="course.html">Course</a>
+    <a href="diagnostic.html">Diagnostic</a>
+    <a href="about.html">About</a>
+    <a href="start.html" class="btn">Start</a>
+  </div>
+</nav>
+
+<main class="dx" id="screen" aria-live="polite">
+  <noscript>
+    <p style="color: var(--text-muted)">PRSNABLE needs JavaScript to ask you these questions. Turn it on and come back. It will be worth it.</p>
+  </noscript>
+</main>
+
+<footer class="footer">
+  <span>PRSNABLE</span>
+  <span>12 questions · about 3 minutes</span>
+</footer>
+
+<script>
+window.PRSNABLE_DIAGNOSTIC = {"order": ["B1", "B2", "B4", "C1", "C2", "C4", "L1", "L2", "L3", "L5", "S1", "S2"], "questions": {"B1": {"text": "When something in your life or work breaks down, where do you look first?", "options": {"a": "My foundation — who I am when no one's watching.", "b": "My rhythms — what my days are actually made of.", "c": "My message — whether what I'm saying is still true.", "d": "My people — who I've entrusted and how I'm leading them."}}, "B2": {"text": "You have one unscheduled hour. What do you reach for?", "options": {"a": "Stillness — prayer, reflection, getting honest.", "b": "Order — clearing the backlog, fixing what's broken.", "c": "Craft — writing, shaping the message.", "d": "People — a conversation that actually matters."}}, "B4": {"text": "The last time you felt deeply aligned, what were you doing?", "options": {"a": "Alone and honest — no audience, no performance.", "b": "In a rhythm that was working — the machine humming.", "c": "Saying the thing only you could say.", "d": "Watching someone you poured into step up."}}, "C1": {"text": "Finish the sentence honestly: “I can’t slow down because…”", "options": {"a": "…my value is in my output.", "b": "…things would fall apart without me.", "c": "…I’m not ready to face what I’d find.", "d": "…I’m waiting until I feel ready, and I never do."}}, "C2": {"text": "The thought you don’t say out loud:", "options": {"a": "They follow the role, not me.", "b": "I’m tired in a way sleep doesn’t fix.", "c": "If I stopped, everyone would see the gap.", "d": "I give so much because I need to be needed."}}, "C4": {"text": "What are you most afraid people will discover?", "options": {"a": "That I’m making it up as I go.", "b": "That the public me is a managed version.", "c": "That I’m running on empty.", "d": "That I need them more than they need me."}}, "L1": {"text": "When someone disappoints you, you…", "options": {"a": "Withdraw quietly and need them less.", "b": "Keep score — you remember exactly.", "c": "Confront and repair — clean and quick.", "d": "Pretend it didn’t happen and carry on."}}, "L2": {"text": "Your typical week feels…", "options": {"a": "Full but scattered — motion without momentum.", "b": "Heavy — everyone’s needs, none of mine.", "c": "Foggy — I’m not sure what matters most.", "d": "Ordered on paper, leaking in practice."}}, "L3": {"text": "By Thursday, you are…", "options": {"a": "Running on fumes — the tank was empty Tuesday.", "b": "Fine physically, numb internally.", "c": "Behind on the things that actually matter.", "d": "Holding it together for everyone else."}}, "L5": {"text": "You start strong and…", "options": {"a": "Fade by week three. Every time.", "b": "Get pulled into something newer.", "c": "Finish, but resent the cost.", "d": "Actually finish — starting isn’t my problem."}}, "S1": {"text": "When you talk about the future, people…", "options": {"a": "Lean in — they can see it too.", "b": "Nod politely — it’s not landing yet.", "c": "Aren’t around to hear it — I have no real platform yet.", "d": "Already heard it — I need a new way to say it."}}, "S2": {"text": "Your message right now is…", "options": {"a": "Clear, but hardly anyone’s hearing it.", "b": "Heard, but I say it differently every time.", "c": "Consistent — the bottleneck is everything around it.", "d": "Not the problem — the problem is what happens after people respond."}}}}
+;
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var DATA = window.PRSNABLE_DIAGNOSTIC || { order: [], questions: {} };
+  var ORDER = DATA.order;
+  var QUESTIONS = DATA.questions;
+
+  var screen = document.getElementById("screen");
+  var answers = {};
+  var visitorName = "";
+  var idx = 0;
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function progressBar() {
+    var pct = Math.round((idx / ORDER.length) * 100);
+    return (
+      '<div class="dx-progress">' +
+        '<div class="dx-track"><div class="dx-fill" style="width:' + pct + '%"></div></div>' +
+        '<div class="dx-label">Question ' + Math.min(idx + 1, ORDER.length) + " of " + ORDER.length + "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderName() {
+    screen.innerHTML =
+      '<div>' +
+        '<p class="dx-q">First, what should PRSNABLE call you?</p>' +
+        '<p class="dx-sub">So this feels like a conversation, not a form. Totally optional.</p>' +
+        '<label for="dx-name">Your name</label>' +
+        '<input id="dx-name" type="text" autocomplete="given-name" maxlength="60" placeholder="Your name" style="max-width: 420px;">' +
+        '<div style="display: flex; gap: 12px; align-items: center;">' +
+          '<button class="btn-submit" id="dx-name-go" type="button">Start</button>' +
+          '<button class="dx-back" id="dx-name-skip" type="button" style="margin-top: 0;">Skip</button>' +
+        "</div>" +
+      "</div>";
+
+    var input = document.getElementById("dx-name");
+    input.focus();
+    function go() {
+      visitorName = input.value.trim();
+      idx = 0;
+      renderQuestion();
+    }
+    document.getElementById("dx-name-go").addEventListener("click", go);
+    document.getElementById("dx-name-skip").addEventListener("click", function () {
+      visitorName = "";
+      idx = 0;
+      renderQuestion();
+    });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); go(); }
+    });
+  }
+
+  function renderQuestion() {
+    var qid = ORDER[idx];
+    var q = QUESTIONS[qid];
+    if (!q) { renderDone(); return; }
+
+    var opts = Object.keys(q.options)
+      .map(function (letter) {
+        return '<button class="dx-opt" type="button" data-letter="' + letter + '">' + esc(q.options[letter]) + "</button>";
+      })
+      .join("");
+
+    screen.innerHTML =
+      '<div>' +
+        progressBar() +
+        '<p class="dx-q">' + esc(q.text) + "</p>" +
+        '<p class="dx-sub">Answer with your gut. There are no right answers here.</p>' +
+        '<div class="dx-options">' + opts + "</div>" +
+        '<button class="dx-back" id="dx-back" type="button">&larr; Back</button>' +
+      "</div>";
+
+    var buttons = screen.querySelectorAll(".dx-opt");
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener("click", function () {
+        answers[qid] = btn.getAttribute("data-letter");
+        idx++;
+        if (idx < ORDER.length) { renderQuestion(); } else { renderDone(); }
+      });
+    });
+
+    document.getElementById("dx-back").addEventListener("click", function () {
+      if (idx > 0) {
+        delete answers[ORDER[idx]];
+        idx--;
+        renderQuestion();
+      } else {
+        renderName();
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  var FIRST_LOOK = {
+    a: "When something breaks down, you look first to your foundation: who you are when no one is watching. That is where your agent starts.",
+    b: "When something breaks down, you look first to your rhythms: what your days are actually made of. That is where your agent starts.",
+    c: "When something breaks down, you look first to your message: whether what you are saying is still true. That is where your agent starts.",
+    d: "When something breaks down, you look first to your people: who you have entrusted, and how you are leading them. That is where your agent starts."
+  };
+
+  function renderDone() {
+    var first = FIRST_LOOK[answers["B1"]] || FIRST_LOOK.a;
+    var hello = visitorName ? esc(visitorName) + ", here" : "Here";
+    screen.innerHTML =
+      '<div>' +
+        '<p class="dx-eyebrow">Your starting point</p>' +
+        '<p class="dx-q">' + hello + ' is what I can already see.</p>' +
+        '<div class="dx-read">' +
+          "<p>" + esc(first) + "</p>" +
+          "<p>That is one line, drawn from your first answer. The full read is built with your agent when you start, from all twelve answers and the work you do together.</p>" +
+          "<p>Your answers stayed on this device. Nothing was uploaded, and nothing was saved here.</p>" +
+        "</div>" +
+        '<div style="display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap;">' +
+          '<a class="btn" href="start.html">Start</a>' +
+          '<a class="btn-ghost" href="diagnostic.html">Retake</a>' +
+        "</div>" +
+      "</div>";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (!ORDER.length || !Object.keys(QUESTIONS).length) {
+    screen.innerHTML = '<p class="dx-sub">The diagnostic could not load. Please try again in a moment.</p>';
+    return;
+  }
+  renderName();
+})();
+</script>
+</body>
+</html>

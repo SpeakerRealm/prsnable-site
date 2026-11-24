@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRSNABLE | Start</title>
+<meta name="description" content="Start with PRSNABLE. Tell us what you want, or take the diagnostic first and let your agent start with a picture of how you are wired.">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;510;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <div class="logo"><a href="index.html">PRSNABLE</a></div>
+  <div class="nav-links">
+    <a href="index.html#rooms">Rooms</a>
+    <a href="agent.html">Your agent</a>
+    <a href="course.html">Course</a>
+    <a href="diagnostic.html">Diagnostic</a>
+    <a href="about.html">About</a>
+    <a href="start.html" class="btn">Start</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Start here.</h1>
+  <p>Tell us what you want and we will walk you in. Or take the diagnostic first, and your agent starts with a picture of how you are wired.</p>
+</section>
+
+<section class="section">
+  <h2>What do you want?</h2>
+  <p class="lead">Answer honestly. This is the first thing your agent will know about your project.</p>
+  <form id="start-form">
+    <label for="f-name">Your name</label>
+    <input id="f-name" type="text" autocomplete="name" maxlength="80" placeholder="Your name">
+    <label for="f-email">Your email</label>
+    <input id="f-email" type="email" autocomplete="email" maxlength="120" placeholder="you@example.com">
+    <label for="f-want">What do you want?</label>
+    <select id="f-want">
+      <option>Speak on stages</option>
+      <option>Write a book</option>
+      <option>Start a business</option>
+      <option>Grow a podcast</option>
+      <option>Streamline my church</option>
+      <option>Preserve my story</option>
+      <option>Learn to build with AI</option>
+      <option>Something else</option>
+    </select>
+    <label for="f-more">Tell us a little more</label>
+    <textarea id="f-more" maxlength="2000" placeholder="Where are you starting from, and what would done look like?"></textarea>
+    <button type="submit">Send your answers</button>
+    <p class="fine" style="margin-top: 14px; color: var(--text-muted); font-size: 13px;">This opens your email app with everything filled in. Nothing is sent until you press send there.</p>
+  </form>
+  <div class="panel" style="margin-top: 60px;">
+    <h3>Rather start with the diagnostic?</h3>
+    <p>Twelve questions, about three minutes, and your agent begins with a read on how you are wired instead of a blank page.</p>
+    <p style="margin-top: 16px;"><a class="btn-ghost" href="diagnostic.html">Take the diagnostic</a></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>PRSNABLE</span>
+  <span>What do you want?</span>
+</footer>
+
+<script>
+document.getElementById("start-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var name = document.getElementById("f-name").value.trim();
+  var email = document.getElementById("f-email").value.trim();
+  var want = document.getElementById("f-want").value;
+  var more = document.getElementById("f-more").value.trim();
+  var subject = "PRSNABLE start: " + want;
+  var body =
+    "Name: " + name + "\n" +
+    "Email: " + email + "\n" +
+    "What I want: " + want + "\n\n" +
+    more + "\n";
+  window.location.href =
+    "mailto:hello@speakerrealm.com?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
