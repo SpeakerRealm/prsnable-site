@@ -7,11 +7,12 @@
 <meta name="description" content="12 questions. About three minutes. Then PRSNABLE shows you what you are already carrying.">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;510;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;510;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<canvas id="p-stars"></canvas>
 <nav>
-  <div class="logo"><a href="index.html">PRSNABLE</a></div>
+  <div class="logo"><a href="index.html"><span class="mark">P</span>PRSNABLE</a></div>
   <div class="nav-links">
     <a href="index.html#rooms">Rooms</a>
     <a href="agent.html">Your agent</a>
@@ -177,5 +178,6 @@ window.PRSNABLE_DIAGNOSTIC = {"order": ["B1", "B2", "B4", "C1", "C2", "C4", "L1"
   renderName();
 })();
 </script>
+<script src="stars.js"></script>
 </body>
 </html>
